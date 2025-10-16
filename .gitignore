@@ -1,0 +1,30 @@
+# Environment variables (contains sensitive Supabase keys)
+.env
+
+# Node modules (if added later)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+~*
+
+# Build outputs
+dist/
+build/
+*.min.js
+*.min.css

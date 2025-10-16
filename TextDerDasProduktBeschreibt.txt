@@ -1,0 +1,13 @@
+Scopes --> Sind die Geschäftrsprozess diese können ganz simple per r BPMN Diagrammen für das Verständnis des Flows + passender Dokumentation für das Verständnis des Agenten für den entsprechenden Kontext 
+
+Dashboard --> All Metrics perfrormance of the sprites, your tasks and your researches 
+
+Scopes --> Your BUsiuness Process which define the agensts scopes 
+
+Meilensteine --> Defines the concret timeline of a task in connection with your scope
+
+Tasks --> defines Tasks within certain meilensteine and can be executed by sprites
+
+Backlog --> Backlog Tasks 
+
+Sprites -->  Talk to your

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Sprites - AI Agents für Compliance & Research</title>
+    <link rel="icon" type="image/png" href="Logo/NEW_SPRITES_LOGO.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --accent-green: #10b981;
+            --light-bg: #f8fafc;
+            --dark-text: #1e293b;
+            --gray-text: #64748b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--dark-text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .hero {
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #10b981 100%);
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .logo-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            display: inline-block;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .logo {
+            max-width: 350px;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-text {
+            color: white;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            color: white;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            color: white;
+        }
+
+        .cta-button {
+            background: white;
+            color: var(--primary-blue);
+            padding: 1.2rem 3rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-blue);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: var(--secondary-blue);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+        }
+
+        .feature-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        .feature-description {
+            color: var(--gray-text);
+            line-height: 1.8;
+        }
+
+        .screenshots-section {
+            background: var(--light-bg);
+            padding: 6rem 2rem;
+        }
+
+        .screenshots-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin-top: 3rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .screenshot-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            transition: all 0.4s ease;
+        }
+
+        .screenshot-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+        }
+
+        .screenshot-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .waitlist-section {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            text-align: center;
+        }
+
+        .waitlist-section .section-title {
+            color: white;
+        }
+
+        .waitlist-form {
+            max-width: 600px;
+            margin: 3rem auto 0;
+            background: rgba(255,255,255,0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: white;
+            background: white;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: white;
+            color: var(--primary-blue);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: white;
+            padding: 1.2rem 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 320px;
+            margin-bottom: 1rem;
+            animation: toastSlideIn 0.4s ease-out;
+            pointer-events: all;
+        }
+
+        .toast.hiding {
+            animation: toastSlideOut 0.4s ease-out forwards;
+        }
+
+        @keyframes toastSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(400px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes toastSlideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(400px);
+            }
+        }
+
+        .toast-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .toast.success .toast-icon {
+            background: #10b981;
+            color: white;
+            animation: checkmarkPop 0.6s ease-out;
+        }
+
+        .toast.success .toast-icon::before {
+            content: '✓';
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        @keyframes checkmarkPop {
+            0% {
+                transform: scale(0) rotate(-180deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(10deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .toast.error .toast-icon {
+            background: #ef4444;
+            color: white;
+        }
+
+        .toast.error .toast-icon::before {
+            content: '✕';
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .toast-message {
+            flex: 1;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .toast.success .toast-message {
+            color: #059669;
+        }
+
+        .toast.error .toast-message {
+            color: #dc2626;
+        }
+
+        @media (max-width: 768px) {
+            .toast-container {
+                top: 1rem;
+                right: 1rem;
+                left: 1rem;
+            }
+
+            .toast {
+                min-width: auto;
+                width: 100%;
+            }
+        }
+
+        footer {
+            background: var(--dark-text);
+            color: white;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .logo-container {
+                padding: 2rem;
+            }
+
+            .logo {
+                max-width: 250px;
+            }
+
+            .screenshots-grid {
+                gap: 2rem;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .screenshots-section {
+                padding: 3rem 1rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 30px;
+            height: 50px;
+            border: 2px solid white;
+            border-radius: 25px;
+            position: relative;
+        }
+
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: scrollDot 2s infinite;
+        }
+
+        @keyframes scrollDot {
+            0% {
+                top: 10px;
+                opacity: 1;
+            }
+            100% {
+                top: 30px;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="logo-container">
+                <img src="Logo/NEW_SPRITES_LOGO.png" alt="Sprites Logo" class="logo">
+            </div>
+            <div class="hero-text">
+                <h1>Die Zukunft der Compliance-Automatisierung</h1>
+                <p class="hero-subtitle">
+                    Intelligente AI Agents für DSGVO, ISO 27001, AI Act und mehr.<br>
+                    Automatisierte Analysen. Fundierte Empfehlungen. Maximale Effizienz.
+                </p>
+                <button class="cta-button" onclick="scrollToWaitlist()">
+                    Jetzt auf Warteliste eintragen
+                </button>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <h2 class="section-title">Revolutionäre Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="Logo/Icons/research.png" alt="Research Icon">
+                </div>
+                <h3 class="feature-title">Intelligente Research Sprites</h3>
+                <p class="feature-description">
+                    Unsere AI Agents durchsuchen, analysieren und validieren automatisch Compliance-Anforderungen für DSGVO, ISO 27001, AI Act und weitere Standards.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="Logo/Icons/dashboard.png" alt="Dashboard Icon">
+                </div>
+                <h3 class="feature-title">Echtzeit-Dashboards</h3>
+                <p class="feature-description">
+                    Behalten Sie den Überblick über aktive Sprites, Fortschritte und validierte Insights in übersichtlichen, interaktiven Dashboards.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="Logo/Icons/sprites.png" alt="Sprites Icon">
+                </div>
+                <h3 class="feature-title">Intelligente Compliance-Analysen</h3>
+                <p class="feature-description">
+                    Lassen Sie Compliance-Anforderungen automatisch analysieren, dokumentieren und bewerten – von der Research bis zum detaillierten Bericht mit Handlungsempfehlungen.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="Logo/Icons/notes.png" alt="Notes Icon">
+                </div>
+                <h3 class="feature-title">Fundierte Erkenntnisse</h3>
+                <p class="feature-description">
+                    Erhalten Sie präzise, KI-gestützte Erkenntnisse und praxisnahe Handlungsempfehlungen für Ihre Compliance-Prozesse.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="Logo/Icons/meilensteine.png" alt="Meilensteine Icon">
+                </div>
+                <h3 class="feature-title">Fortschrittsverfolgung</h3>
+                <p class="feature-description">
+                    Verfolgen Sie den Status Ihrer Compliance-Projekte in Echtzeit mit detaillierten Metriken und Meilensteinen.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="Logo/Icons/Scopes.png" alt="Scopes Icon">
+                </div>
+                <h3 class="feature-title">Workflow-Automatisierung</h3>
+                <p class="feature-description">
+                    Definieren Sie Scopes und Geschäftsprozesse, die automatisch von AI Agents bearbeitet und dokumentiert werden.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="section screenshots-section">
+        <h2 class="section-title">Sprites in Aktion</h2>
+        <div class="screenshots-grid">
+            <div class="screenshot-card">
+                <img src="ScreenshotsFrontend/2025-10-16 01_06_40-Sprites.png" alt="Research Dashboard mit Compliance Audits">
+            </div>
+            <div class="screenshot-card">
+                <img src="ScreenshotsFrontend/2025-10-16 01_11_37-Sprites.png" alt="Audit-Ergebnisse und Insights">
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist Section -->
+    <section class="section waitlist-section" id="waitlist">
+        <h2 class="section-title">Seien Sie dabei, wenn Sprites startet</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 1rem;">
+            Sichern Sie sich jetzt Ihren Platz auf der Warteliste und erhalten Sie exklusiven Early Access.
+        </p>
+        <div class="waitlist-form">
+            <form id="waitlistForm">
+                <div class="form-group">
+                    <input
+                        type="text"
+                        id="name"
+                        class="form-input"
+                        placeholder="Ihr Name"
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <input
+                        type="email"
+                        id="email"
+                        class="form-input"
+                        placeholder="Ihre E-Mail-Adresse"
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <input
+                        type="text"
+                        id="company"
+                        class="form-input"
+                        placeholder="Unternehmen (optional)"
+                    >
+                </div>
+                <button type="submit" class="submit-button" id="submitBtn">
+                    Jetzt auf Warteliste eintragen
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutzerklärung</a>
+            </div>
+            <div class="footer-bottom">
+                2025 Sprites
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://ujwtkcivzbofumtsumcx.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVqd3RrY2l2emJvZnVtdHN1bWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA1NTE4NDIsImV4cCI6MjA3NjEyNzg0Mn0.Ko00GumyBr0AWCL8Kwo-yKh-xCIFhwXPkrceXH5C3EE';
+
+        const { createClient } = window.supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Scroll to waitlist
+        function scrollToWaitlist() {
+            document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="toast-icon"></div>
+                <div class="toast-message">${message}</div>
+            `;
+
+            container.appendChild(toast);
+
+            // Auto remove after 4 seconds
+            setTimeout(() => {
+                toast.classList.add('hiding');
+                setTimeout(() => {
+                    container.removeChild(toast);
+                }, 400);
+            }, 4000);
+        }
+
+        // Handle form submission
+        document.getElementById('waitlistForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Get form values
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const company = document.getElementById('company').value.trim();
+
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Wird eingetragen...';
+
+            try {
+                // Insert into Supabase
+                const { data, error } = await supabaseClient
+                    .from('waitlist')
+                    .insert([
+                        {
+                            name: name,
+                            email: email,
+                            company: company || null
+                        }
+                    ]);
+
+                if (error) throw error;
+
+                // Success toast
+                showToast('Vielen Dank! Sie wurden erfolgreich zur Warteliste hinzugefügt.', 'success');
+
+                // Reset form
+                document.getElementById('waitlistForm').reset();
+
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.', 'error');
+            } finally {
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Jetzt auf Warteliste eintragen';
+            }
+        });
+    </script>
+</body>
+</html>
