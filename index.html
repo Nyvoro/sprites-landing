@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Sprites - Erstellen Sie Ihre eigenen AI Agents</title>
+    <title>Sprites - AI Agent Management Platform | Automate Your Workflow</title>
+    <meta name="description" content="Turn your business processes into automated workflows with Sprites. No coding required. Custom AI agents that understand context, remember everything, and scale your productivity infinitely.">
+    <meta name="keywords" content="AI agents, workflow automation, no-code automation, AI workforce, process automation, productivity platform, AI task management, intelligent agents">
     <link rel="icon" type="image/png" href="Logo/NEW_SPRITES_LOGO.png">
     <style>
         * {
@@ -20,6 +22,13 @@
             --light-bg: #f8fafc;
             --dark-text: #1e293b;
             --gray-text: #64748b;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -27,6 +36,111 @@
             color: var(--dark-text);
             overflow-x: hidden;
             line-height: 1.6;
+        }
+
+        /* Animated Background Blobs */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--gradient-1);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--gradient-2);
+            top: 200px;
+            right: -150px;
+            animation-delay: 5s;
+        }
+
+        .blob-3 {
+            width: 450px;
+            height: 450px;
+            background: var(--gradient-3);
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            50% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+            75% {
+                transform: translate(40px, 10px) scale(1.05);
+            }
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-blue), var(--accent-green));
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* Fade-in Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Sticky Mobile CTA */
+        .sticky-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transform: translateY(100px);
+            transition: transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sticky-cta.visible {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .sticky-cta {
+                display: flex;
+            }
         }
 
         .hero {
@@ -42,10 +156,11 @@
         .hero::before {
             content: '';
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             right: 0;
-            height: 60%;
+            bottom: 0;
+            height: 100%;
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #10b981 100%);
             z-index: 0;
         }
@@ -53,10 +168,11 @@
         .hero::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             right: 0;
-            height: 60%;
+            bottom: 0;
+            height: 100%;
             background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
             background-size: 50px 50px;
             animation: moveGrid 20s linear infinite;
@@ -72,23 +188,29 @@
             position: relative;
             z-index: 2;
             text-align: center;
-            padding: 2rem;
+            padding: 0.5rem 2rem 2rem;
             max-width: 1200px;
             width: 100%;
         }
 
         .logo-container {
             background: white;
-            padding: 3rem;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            padding: 1.5rem 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             display: inline-block;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             animation: fadeInUp 1s ease-out;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .logo-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
         }
 
         .logo {
-            max-width: 350px;
+            max-width: 180px;
             height: auto;
             display: block;
         }
@@ -125,22 +247,55 @@
         }
 
         .cta-button {
-            background: white;
-            color: var(--primary-blue);
+            background: linear-gradient(135deg, var(--secondary-blue), var(--accent-green));
+            color: white;
             padding: 1.2rem 3rem;
             font-size: 1.2rem;
             font-weight: 600;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: fadeInUp 1s ease-out 0.6s both;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4);
+            animation: fadeInUp 1s ease-out 0.6s both, pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.5);
+        }
+
+        .cta-button:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4);
+            }
+            50% {
+                box-shadow: 0 10px 40px rgba(59, 130, 246, 0.6), 0 0 30px rgba(59, 130, 246, 0.4);
+            }
         }
 
         .section {
@@ -164,18 +319,37 @@
         }
 
         .feature-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
             padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary-blue), var(--accent-green));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-            border-color: var(--secondary-blue);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.25);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
         }
 
         .feature-icon {
@@ -224,21 +398,28 @@
 
         .screenshot-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
-            transition: all 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         .screenshot-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+            transform: translateY(-15px) rotateX(2deg);
+            box-shadow: 0 30px 80px rgba(59, 130, 246, 0.3);
         }
 
         .screenshot-card img {
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .screenshot-card:hover img {
+            transform: scale(1.02);
         }
 
         .waitlist-section {
@@ -463,21 +644,55 @@
             opacity: 0.8;
         }
 
+        .desktop-break {
+            display: inline;
+        }
+
         @media (max-width: 768px) {
+            .hero {
+                align-items: flex-start;
+                padding-top: 1rem;
+            }
+
+            .hero-content {
+                padding: 0rem 1.5rem 2rem;
+            }
+
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+                line-height: 1.3;
+                word-break: keep-all;
+                hyphens: none;
+            }
+
+            .process-icon {
+                margin-right: 0 !important;
+                margin-bottom: 1rem !important;
+                width: 150px !important;
+                height: 150px !important;
+            }
+
+            .section-title {
+                flex-direction: column !important;
+            }
+
+            .desktop-break {
+                display: none;
             }
 
             .hero-subtitle {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+                line-height: 1.6;
             }
 
             .logo-container {
-                padding: 2rem;
+                padding: 1.2rem 2rem;
+                margin-bottom: 1.5rem;
+                margin-top: 0rem;
             }
 
             .logo {
-                max-width: 250px;
+                max-width: 140px;
             }
 
             .screenshots-grid {
@@ -485,17 +700,53 @@
             }
 
             .section {
-                padding: 3rem 1rem;
+                padding: 4rem 1.5rem;
             }
 
             .screenshots-section {
-                padding: 3rem 1rem;
+                padding: 4rem 1.5rem;
             }
 
             .footer-links {
                 flex-direction: column;
                 align-items: center;
                 gap: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .feature-card, .use-case-card, .pricing-card {
+                padding: 1.8rem;
+            }
+
+            .cta-button {
+                padding: 1rem 2.5rem;
+                font-size: 1.1rem;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .blob {
+                filter: blur(40px);
+                opacity: 0.3;
+            }
+
+            .blob-1 {
+                width: 300px;
+                height: 300px;
+            }
+
+            .blob-2 {
+                width: 250px;
+                height: 250px;
+            }
+
+            .blob-3 {
+                width: 280px;
+                height: 280px;
             }
         }
 
@@ -551,110 +802,747 @@
                 opacity: 0;
             }
         }
+
+        /* Additional Sections Styles */
+        .hero-screenshot-section {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero-screenshot-section {
+                display: block;
+            }
+        }
+
+        .problem-section {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .problem-section .section-title {
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .problem-body {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.3rem;
+            line-height: 2;
+            opacity: 0.95;
+        }
+
+        .problem-body strong {
+            display: block;
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            color: var(--accent-green);
+        }
+
+        .solution-section {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .solution-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .solution-text {
+            max-width: 900px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+
+        .solution-body {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: var(--gray-text);
+            margin-top: 2rem;
+        }
+
+        .steps-section {
+            background: var(--light-bg);
+            padding: 6rem 2rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .step-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        .step-text {
+            color: var(--gray-text);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .use-cases-section {
+            padding: 6rem 2rem;
+        }
+
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .use-case-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .use-case-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .use-case-card:hover {
+            border-color: var(--secondary-blue);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.2);
+        }
+
+        .use-case-card:hover::after {
+            opacity: 1;
+        }
+
+        .use-case-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+        }
+
+        .use-case-subtitle {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-blue);
+        }
+
+        .use-case-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .use-case-list li {
+            color: var(--gray-text);
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .use-case-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        .use-case-quote {
+            font-style: italic;
+            color: var(--primary-blue);
+            font-weight: 500;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(30, 58, 138, 0.1);
+        }
+
+        .differentiators-section {
+            background: var(--light-bg);
+            padding: 6rem 2rem;
+        }
+
+        .diff-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .diff-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .diff-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--primary-blue);
+        }
+
+        .diff-text {
+            color: var(--gray-text);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .pricing-teaser {
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--secondary-blue);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .pricing-tier {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .pricing-features li {
+            padding: 0.8rem 0;
+            color: var(--gray-text);
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .final-cta-section {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue), var(--accent-green));
+            color: white;
+            text-align: center;
+            padding: 8rem 2rem;
+        }
+
+        .final-cta-section .section-title {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .final-cta-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.95;
+        }
+
+        .final-cta-description {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            color: white;
+            padding: 1.2rem 3rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button-secondary:hover {
+            background: white;
+            color: var(--primary-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .screenshot-with-text {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .large-screenshot {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .large-screenshot::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--secondary-blue), var(--accent-green));
+            border-radius: 28px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .large-screenshot:hover {
+            transform: translateY(-20px) rotateX(3deg) scale(1.02);
+            box-shadow: 0 40px 100px rgba(59, 130, 246, 0.35);
+        }
+
+        .large-screenshot:hover::before {
+            opacity: 0.5;
+        }
+
+        .large-screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .large-screenshot:hover img {
+            transform: scale(1.03);
+        }
+
+        @media (max-width: 768px) {
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .use-cases-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .final-cta-section .section-title {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Sticky Mobile CTA -->
+    <div class="sticky-cta" id="stickyCta">
+        <button class="cta-button" onclick="scrollToWaitlist()" style="margin: 0; animation: none;">
+            Join Waitlist
+        </button>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
+        <!-- Animated Background Blobs -->
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
         <div class="hero-content">
             <div class="logo-container">
                 <img src="Logo/NEW_SPRITES_LOGO.png" alt="Sprites Logo" class="logo">
             </div>
             <div class="hero-text">
-                <h1>Erstellen Sie Ihre eigenen AI Agents</h1>
+                <h1>Meet your Team</h1>
                 <p class="hero-subtitle">
-                    Die Plattform für individuell konfigurierbare AI Agents.<br>
-                    Definieren, Überwachen, Optimieren - Alles unter Ihrer Kontrolle.
+                    Meet Sprites - the AI Agent Management Platform that turns your processes into automated workflows. No coding. No consoles. Just pure productivity.
+                </p>
+                <p style="margin-bottom: 2rem; font-size: 1.1rem; opacity: 0.9;">
+                    From solo developers to legal professionals, Sprites helps anyone structure their work and scale their output through intelligent AI agents. Because automation should be simple, not complex.
                 </p>
                 <button class="cta-button" onclick="scrollToWaitlist()">
-                    Jetzt auf Warteliste eintragen
+                    Join Waitlist
                 </button>
             </div>
         </div>
-        <div class="scroll-indicator">
-            <span></span>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section fade-in">
+        <h2 class="section-title fade-in">Drowning in Repetitive Work?</h2>
+        <div class="problem-body fade-in">
+            <p>
+                You know the feeling. The same tasks every week. The manual processes that eat your time. The knowledge scattered across tools. The context you have to rebuild every single time.
+            </p>
+            <strong>There's a better way.</strong>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="section">
-        <h2 class="section-title">Strukturierte Features</h2>
-        <div class="features-grid">
+    <!-- Solution Section -->
+    <section class="solution-section fade-in">
+        <div class="solution-content">
+            <div class="solution-text fade-in">
+                <h2 class="section-title" style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+                    <img src="Logo/IconsNew/Processes.png" alt="Processes" class="process-icon" style="width: 120px; height: 120px; margin-right: 1rem;">
+                    <span class="headline-text">Automate the World,<br class="desktop-break"> One Process at a Time</span>
+                </h2>
+                <div class="solution-body">
+                    <p>
+                        Sprites believes automation isn't about replacing humans - it's about freeing them. By mapping your business processes first, we create the foundation for true automation.
+                    </p>
+                    <p style="margin-top: 1.5rem;">
+                        Your Sprites agents understand context, remember everything, and execute complex workflows while you focus on what actually matters.
+                    </p>
+                </div>
+            </div>
+            <!-- Mobile Screenshot 3 (Mobile Only) -->
+            <div class="screenshot-with-text fade-in hero-screenshot-section">
+                <div class="large-screenshot">
+                    <img src="ScreenshotsFrontend/Mobile3.png" alt="Sprites Mobile App Preview">
+                </div>
+            </div>
+            <div class="screenshot-with-text fade-in">
+                <div class="large-screenshot">
+                    <picture>
+                        <source media="(max-width: 768px)" srcset="ScreenshotsFrontend/Mobile.png">
+                        <img src="ScreenshotsFrontend/2025-10-16 01_06_40-Sprites.png" alt="Sprites Dashboard - Research and Compliance Automation">
+                    </picture>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="steps-section fade-in">
+        <h2 class="section-title fade-in">How It Works</h2>
+        <p class="fade-in" style="text-align: center; font-size: 1.2rem; color: var(--gray-text); max-width: 700px; margin: 0 auto 1rem;">Simple 3-Step Process</p>
+        <div class="steps-grid fade-in">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Define Your Scopes</h3>
+                <p class="step-text">
+                    Map your business processes. An e-commerce flow. A monthly compliance check. A content pipeline. Sprites learns what matters.
+                </p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Set Your Milestones</h3>
+                <p class="step-text">
+                    Draft your roadmap. Set time-based checkpoints. Watch progress unfold in real-time.
+                </p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Let Sprites Work</h3>
+                <p class="step-text">
+                    Assign tasks to your AI agents. They read context, split work intelligently, coordinate with sub-agents, and deliver results.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Showcase Section -->
+    <section class="section fade-in">
+        <h2 class="section-title fade-in">Feature Showcase</h2>
+        <div class="features-grid fade-in">
             <div class="feature-card">
                 <div class="feature-icon">
                     <img src="Logo/Icons/dashboard.png" alt="Dashboard Icon">
                 </div>
-                <h3 class="feature-title">Dashboard</h3>
+                <h3 class="feature-title">Dashboard - Your Command Center</h3>
                 <p class="feature-description">
-                    Behalten Sie den vollständigen Überblick: Alle Metriken, Performance-Daten Ihrer Sprites und den Status Ihrer Recherchen an einem zentralen Ort.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <img src="Logo/Icons/research.png" alt="Research Icon">
-                </div>
-                <h3 class="feature-title">Research Cockpit</h3>
-                <p class="feature-description">
-                    Steuern Sie Ihre Research-Projekte zentral: Initiieren Sie Recherchen, überwachen Sie den Fortschritt und validieren Sie die Ergebnisse Ihrer AI Agents in Echtzeit.
+                    Welcome to the Sprites Cockpit. See everything at a glance: active tasks, agent status, ongoing activities, and KPIs that matter. Onboarding has never been smoother.
                 </p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <img src="Logo/Icons/Scopes.png" alt="Scopes Icon">
                 </div>
-                <h3 class="feature-title">Scopes</h3>
+                <h3 class="feature-title">Scopes - The Foundation</h3>
                 <p class="feature-description">
-                    Definieren Sie Ihre Geschäftsprozesse und Aufgabenbereiche. Jeder Scope bildet den Rahmen für Ihre AI Agents und bestimmt deren Arbeitsbereich.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <img src="Logo/Icons/meilensteine.png" alt="Meilensteine Icon">
-                </div>
-                <h3 class="feature-title">Meilensteine</h3>
-                <p class="feature-description">
-                    Legen Sie konkrete Zeitpläne und Zwischenziele fest. Meilensteine strukturieren Ihre Tasks innerhalb eines Scopes und geben klare Orientierung.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <img src="Logo/Icons/Tasks-removebg-preview.png" alt="Tasks Icon">
-                </div>
-                <h3 class="feature-title">Tasks</h3>
-                <p class="feature-description">
-                    Erstellen Sie spezifische Aufgaben innerhalb Ihrer Meilensteine. Tasks werden von Ihren Sprites eigenständig ausgeführt und dokumentiert.
+                    Every business has processes. Sprites makes them automatable. Define contextual boundaries for your work: E2E customer flows, legal processes, content pipelines, development workflows.
                 </p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
                     <img src="Logo/Icons/sprites.png" alt="Sprites Icon">
                 </div>
-                <h3 class="feature-title">Sprites</h3>
+                <h3 class="feature-title">Sprites - Your AI Workforce</h3>
                 <p class="feature-description">
-                    Definieren, konfigurieren und kommunizieren Sie mit Ihren AI Agents. Geben Sie präzise Anweisungen und erhalten Sie intelligente Antworten.
+                    Create and customize AI agents with unique names, avatars, distinct personalities, editable master prompts, and long-term memory powered by vector databases. Your agents, your way.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="Logo/Icons/Tasks-removebg-preview.png" alt="Tasks Icon">
+                </div>
+                <h3 class="feature-title">Tasks & Sub-Tasks</h3>
+                <p class="feature-description">
+                    Break down work into manageable pieces. Connect every task to a Scope and Milestone. Assign to Sprites and watch the magic happen through orchestrated workflows.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="Logo/Icons/research.png" alt="Research Icon">
+                </div>
+                <h3 class="feature-title">Research - AI Knowledge Library</h3>
+                <p class="feature-description">
+                    Collect articles, documents, and insights. Let specialized analysis agents review your research, draw conclusions, identify patterns, and generate recommendations automatically.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="Logo/Icons/meilensteine.png" alt="Milestones Icon">
+                </div>
+                <h3 class="feature-title">Milestones - Track Progress</h3>
+                <p class="feature-description">
+                    Set time-based checkpoints and organize your tasks. Milestones provide structure and help you visualize progress across all your automated workflows.
+                </p>
+            </div>
+        </div>
+
+        <!-- Screenshot Integration -->
+        <div class="screenshot-with-text fade-in" style="margin-top: 5rem;">
+            <div class="large-screenshot">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="ScreenshotsFrontend/Mobile2.png">
+                    <img src="ScreenshotsFrontend/2025-10-16 01_11_37-Sprites.png" alt="Sprites in Action - Audit Results and Insights">
+                </picture>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases-section fade-in">
+        <h2 class="section-title fade-in">Use Cases</h2>
+        <div class="use-cases-grid fade-in">
+            <div class="use-case-card">
+                <h3 class="use-case-title">For Solo Developers</h3>
+                <p class="use-case-subtitle">Automate Your Side Projects</p>
+                <ul class="use-case-list">
+                    <li>Customer service workflows</li>
+                    <li>Deployment pipelines</li>
+                    <li>Bug triage and research</li>
+                    <li>Documentation updates</li>
+                </ul>
+                <p class="use-case-quote">"Sprites handles my customer support while I focus on building features."</p>
+            </div>
+            <div class="use-case-card">
+                <h3 class="use-case-title">For Legal Professionals</h3>
+                <p class="use-case-subtitle">Streamline Recurring Processes</p>
+                <ul class="use-case-list">
+                    <li>Document review automation</li>
+                    <li>Compliance tracking</li>
+                    <li>Case law research</li>
+                    <li>Deadline management</li>
+                </ul>
+                <p class="use-case-quote">"Monthly compliance used to take me 2 days. Now my Sprites agents handle it in hours."</p>
+            </div>
+            <div class="use-case-card">
+                <h3 class="use-case-title">For Content Creators</h3>
+                <p class="use-case-subtitle">Scale Your Output</p>
+                <ul class="use-case-list">
+                    <li>Research gathering</li>
+                    <li>Multi-platform publishing</li>
+                    <li>Performance analysis</li>
+                    <li>Content calendar management</li>
+                </ul>
+                <p class="use-case-quote">"I went from 2 blog posts a week to 10, with better quality."</p>
+            </div>
+            <div class="use-case-card">
+                <h3 class="use-case-title">For Anyone Who Works</h3>
+                <p class="use-case-subtitle">Structure the Chaos</p>
+                <ul class="use-case-list">
+                    <li>Organize scattered tasks</li>
+                    <li>Automate repetitive work</li>
+                    <li>Build consistent processes</li>
+                    <li>Scale personal productivity</li>
+                </ul>
+                <p class="use-case-quote">"Finally, a tool that thinks the way I do."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Makes Sprites Different -->
+    <section class="differentiators-section fade-in">
+        <h2 class="section-title fade-in">What Makes Sprites Different</h2>
+        <div class="diff-grid fade-in">
+            <div class="diff-item">
+                <h3 class="diff-title">Process-First Philosophy</h3>
+                <p class="diff-text">
+                    Unlike other tools that drown you in tasks, Sprites starts with the "why." Define your business processes first, then let automation follow naturally.
+                </p>
+            </div>
+            <div class="diff-item">
+                <h3 class="diff-title">No Technical Barriers</h3>
+                <p class="diff-text">
+                    Access powerful AI orchestration without touching code. If you're reading this, you can use Sprites.
+                </p>
+            </div>
+            <div class="diff-item">
+                <h3 class="diff-title">True Context Awareness</h3>
+                <p class="diff-text">
+                    Vector database technology means your agents remember everything. They understand your work, your history, your context.
+                </p>
+            </div>
+            <div class="diff-item">
+                <h3 class="diff-title">Built for Humans</h3>
+                <p class="diff-text">
+                    Modern, beautiful interface that feels like talking to a colleague, not wrestling with software.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Screenshots Section -->
-    <section class="section screenshots-section">
-        <h2 class="section-title">Sprites in Aktion</h2>
-        <div class="screenshots-grid">
-            <div class="screenshot-card">
-                <img src="ScreenshotsFrontend/2025-10-16 01_06_40-Sprites.png" alt="Research Dashboard mit Compliance Audits">
+    <!-- Pricing Teaser -->
+    <section class="pricing-teaser fade-in">
+        <h2 class="section-title fade-in">Start Free. Scale as You Grow.</h2>
+        <div class="pricing-grid fade-in">
+            <div class="pricing-card">
+                <h3 class="pricing-tier">Free Tier</h3>
+                <ul class="pricing-features">
+                    <li>3 Active Sprites</li>
+                    <li>50 Tasks/month</li>
+                    <li>Basic Scopes</li>
+                    <li>Community Support</li>
+                </ul>
             </div>
-            <div class="screenshot-card">
-                <img src="ScreenshotsFrontend/2025-10-16 01_11_37-Sprites.png" alt="Audit-Ergebnisse und Insights">
+            <div class="pricing-card">
+                <h3 class="pricing-tier">Pro Tier</h3>
+                <ul class="pricing-features">
+                    <li>Unlimited Sprites</li>
+                    <li>Unlimited Tasks</li>
+                    <li>Advanced Orchestration</li>
+                    <li>Priority Support</li>
+                    <li>Custom Integrations</li>
+                </ul>
+            </div>
+            <div class="pricing-card">
+                <h3 class="pricing-tier">Enterprise</h3>
+                <ul class="pricing-features">
+                    <li>Everything in Pro</li>
+                    <li>Dedicated Agents</li>
+                    <li>Custom Workflows</li>
+                    <li>SLA Guarantee</li>
+                    <li>White-Label Options</li>
+                </ul>
             </div>
         </div>
     </section>
 
+    <!-- Final CTA Section -->
+    <section class="final-cta-section fade-in">
+        <h2 class="section-title fade-in">Ready to Automate Your World?</h2>
+        <p class="final-cta-subtitle fade-in">Start building your AI workforce today. No credit card required.</p>
+        <p class="final-cta-description fade-in">
+            Join solo developers, legal professionals, content creators, and ambitious individuals who've chosen to work smarter, not harder.
+        </p>
+        <button class="cta-button fade-in" onclick="scrollToWaitlist()" style="animation: fadeInUp 1s ease-out 0.6s both, pulse 2s infinite;">
+            Join Waitlist
+        </button>
+    </section>
+
     <!-- Waitlist Section -->
     <section class="section waitlist-section" id="waitlist">
-        <h2 class="section-title">Seien Sie dabei, wenn Sprites startet</h2>
+        <h2 class="section-title">Join the Automation Revolution</h2>
         <p style="font-size: 1.2rem; margin-bottom: 1rem;">
-            Sichern Sie sich jetzt Ihren Platz auf der Warteliste und erhalten Sie exklusiven Early Access.
+            Secure your spot on the waitlist and get exclusive early access to Sprites.
         </p>
         <div class="waitlist-form">
             <form id="waitlistForm">
@@ -663,7 +1551,7 @@
                         type="text"
                         id="name"
                         class="form-input"
-                        placeholder="Ihr Name"
+                        placeholder="Your Name"
                         required
                     >
                 </div>
@@ -672,7 +1560,7 @@
                         type="email"
                         id="email"
                         class="form-input"
-                        placeholder="Ihre E-Mail-Adresse"
+                        placeholder="Your Email Address"
                         required
                     >
                 </div>
@@ -681,11 +1569,11 @@
                         type="text"
                         id="company"
                         class="form-input"
-                        placeholder="Unternehmen (optional)"
+                        placeholder="Company (optional)"
                     >
                 </div>
                 <button type="submit" class="submit-button" id="submitBtn">
-                    Jetzt auf Warteliste eintragen
+                    Join Waitlist
                 </button>
             </form>
         </div>
@@ -698,12 +1586,14 @@
     <footer>
         <div class="footer-content">
             <div class="footer-links">
-                <a href="index.html" style="font-weight: bold;">Startseite</a>
-                <a href="impressum.html">Impressum</a>
-                <a href="datenschutz.html">Datenschutzerklärung</a>
+                <a href="index.html" style="font-weight: bold;">Home</a>
+                <a href="impressum.html">Imprint</a>
+                <a href="datenschutz.html">Privacy Policy</a>
             </div>
             <div class="footer-bottom">
-                2025 Sprites
+                <p style="margin-bottom: 0.5rem;"><strong>Sprites - Automate the World, One Process at a Time</strong></p>
+                <p style="opacity: 0.8;">Define processes. Deploy agents. Scale infinitely.</p>
+                <p style="margin-top: 1rem; opacity: 0.7;">© 2025 Sprites</p>
             </div>
         </div>
     </footer>
@@ -721,6 +1611,53 @@
         function scrollToWaitlist() {
             document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
         }
+
+        // Scroll Progress Bar
+        function updateScrollProgress() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = scrollPercentage + '%';
+        }
+
+        window.addEventListener('scroll', updateScrollProgress);
+
+        // Sticky Mobile CTA
+        function toggleStickyCta() {
+            const stickyCta = document.getElementById('stickyCta');
+            const waitlistSection = document.getElementById('waitlist');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const waitlistTop = waitlistSection.offsetTop;
+
+            if (scrollTop > 800 && scrollTop < waitlistTop - 200) {
+                stickyCta.classList.add('visible');
+            } else {
+                stickyCta.classList.remove('visible');
+            }
+        }
+
+        window.addEventListener('scroll', toggleStickyCta);
+
+        // Intersection Observer for Fade-in Animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with fade-in class
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => observer.observe(el));
+        });
 
         // Show toast notification
         function showToast(message, type = 'success') {
@@ -756,7 +1693,7 @@
 
             // Disable button and show loading
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Wird eingetragen...';
+            submitBtn.textContent = 'Joining...';
 
             try {
                 // Insert into Supabase
@@ -773,18 +1710,18 @@
                 if (error) throw error;
 
                 // Success toast
-                showToast('Vielen Dank! Sie wurden erfolgreich zur Warteliste hinzugefügt.', 'success');
+                showToast('Welcome to your Cockpit! You\'ve been successfully added to the waitlist.', 'success');
 
                 // Reset form
                 document.getElementById('waitlistForm').reset();
 
             } catch (error) {
                 console.error('Error:', error);
-                showToast('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.', 'error');
+                showToast('Oops! Even our Sprites make mistakes sometimes. Let\'s try that again.', 'error');
             } finally {
                 // Re-enable button
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Jetzt auf Warteliste eintragen';
+                submitBtn.textContent = 'Join Waitlist';
             }
         });
     </script>
